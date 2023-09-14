@@ -17,7 +17,10 @@ pub trait ColorMap<T: Color + Sized> {
     fn transform_single(&self, color: f64) -> T;
     /// Maps a given collection of numbers between 0 and 1 to an iterator of `Color`s. Does not evaluate
     /// lazily, because the colormap could have some sort of state that changes between iterations otherwise.
-    fn transform<U: IntoIterator<Item = f64>>(&self, inputs: U) -> Vec<T> {
+    fn transform<U: IntoIterator<Item = f64>>(&self, inputs: U) -> Vec<T>
+    where
+        Self: Sized,
+    {
         // TODO: make to work on references?
         inputs
             .into_iter()
